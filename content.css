@@ -1,0 +1,10 @@
+#price-tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  pointer-events: none;
+  z-index: 1000;
+  display: none;
+}
