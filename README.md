@@ -2,12 +2,13 @@
 
 ## Descrição
 
-A **Currency Converter Extension** é uma ferramenta poderosa para viajantes e compradores online. Esta extensão para o Chrome facilita a conversão de preços entre USD e BRL em tempo real, aplicando automaticamente a taxa de câmbio atual e o IOF (Imposto sobre Operações Financeiras). Com ela, você pode visualizar os preços convertidos diretamente na página, poupando tempo e esforço ao fazer compras internacionais.
+A **Currency Converter Extension** é uma ferramenta para viajantes e compradores online. Esta extensão para o Chrome facilita a conversão de preços entre USD e BRL em tempo real, aplicando automaticamente a taxa de câmbio atual,o IOF (Imposto sobre Operações Financeiras), ICMS e a nova taxa de importação, conforme a PL 914/24. Com ela, você pode visualizar os preços convertidos diretamente na página, poupando tempo e esforço ao fazer compras internacionais.
 
 ## Funcionalidades
 
 - **Conversão de Moeda em Tempo Real:** Converte preços de USD para BRL e de BRL para USD utilizando taxas de câmbio atualizadas.
-- **Cálculo Automático do IOF:** Aplica a taxa de IOF configurável, permitindo que você veja o preço real incluindo impostos.
+- **Cálculo Automático do IOF:** Aplica a taxa de IOF configurável.
+- **Cálculo Automático do Impostos:** Aplica as taxas de ICMS e importação automaticamente, permitindo que você veja o preço real incluindo impostos.
 - **Tooltip de Preços:** Exibe um tooltip com a conversão direta, valor com IOF e a taxa de IOF aplicada ao passar o mouse sobre os preços.
 - **Suporte a Diversos Formatos de Preço:** Reconhece preços no formato `R$ 99.999,99` e `$ 99,999.99`.
 - **Interface de Usuário Intuitiva:** Permite ativar ou desativar a extensão facilmente através de um botão switch.
@@ -23,7 +24,7 @@ A **Currency Converter Extension** é uma ferramenta poderosa para viajantes e c
 
 3. Ative o "Modo de desenvolvedor" no canto superior direito.
 
-4. Clique em "Carregar sem compactação" e selecione a pasta onde você extraiu os arquivos da extensão.
+4. Clique em "Carregar sem compactação" (ou "Carregar extendida") e selecione a pasta onde você extraiu os arquivos da extensão.
 
 ## Como Usar
 
