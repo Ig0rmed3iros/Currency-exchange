@@ -2,6 +2,7 @@ let enabled = false;
 let conversionRateBRLtoUSD = 0;
 let conversionRateUSDtoBRL = 0;
 let iofRate = 0;
+let internationalPurchase = false;
 
 // Create and style the tooltip
 function createTooltip() {
@@ -33,6 +34,18 @@ function hideTooltip() {
   tooltip.style.display = 'none';
 }
 
+// Calculate ICMS
+function calculateICMS(originalPrice) {
+  const totalPrice = originalPrice / 0.83;
+  const icms = totalPrice * 0.17;
+  return icms;
+}
+
+// Calculate Import Tax
+function calculateImportTax(priceWithFreight) {
+  return priceWithFreight * 0.60;
+}
+
 // Convert price from BRL to formatted USD or from USD to formatted BRL
 function convertPrice(priceText) {
   if (!priceText) {
@@ -45,16 +58,47 @@ function convertPrice(priceText) {
   if (brlMatch) {
     const price = parseFloat(brlMatch[1].replace(/\./g, '').replace(',', '.'));
     const convertedPrice = (price * conversionRateBRLtoUSD).toFixed(2);
-    return `USD: ${formatUSD(convertedPrice)}`;
+    let totalPrice = price;
+    let icms = 0;
+    let importTax = 0;
+
+    if (internationalPurchase) {
+      importTax = calculateImportTax(price);
+      const priceWithImportTax = (price + importTax).toFixed(2);
+      icms = calculateICMS(priceWithImportTax);
+      totalPrice = (parseFloat(priceWithImportTax) + icms).toFixed(2);
+    }
+
+    return `
+      USD: ${formatUSD(convertedPrice)}<br>
+      ${internationalPurchase ? `ICMS: R$ ${formatBRL(icms.toFixed(2))}<br>` : ''}
+      ${internationalPurchase ? `Taxa de Importação: R$ ${formatBRL(importTax.toFixed(2))}<br>` : ''}
+      ${internationalPurchase ? `Total: R$ ${formatBRL(totalPrice)}` : ''}
+    `;
   } else if (usdMatch) {
     const price = parseFloat(usdMatch[1].replace(/,/g, ''));
     const directConversion = (price * conversionRateUSDtoBRL).toFixed(2);
     const iofTax = (directConversion * (iofRate / 100)).toFixed(2);
     const totalWithIof = (parseFloat(directConversion) + parseFloat(iofTax)).toFixed(2);
+
+    let totalPrice = totalWithIof;
+    let icms = 0;
+    let importTax = 0;
+
+    if (internationalPurchase) {
+      importTax = calculateImportTax(parseFloat(totalWithIof));
+      const priceWithImportTax = (parseFloat(totalWithIof) + importTax).toFixed(2);
+      icms = calculateICMS(parseFloat(priceWithImportTax));
+      totalPrice = (parseFloat(priceWithImportTax) + icms).toFixed(2);
+    }
+
     return `
       Conversão Direta: R$ ${formatBRL(directConversion)}<br>
       Com IOF: R$ ${formatBRL(totalWithIof)}<br>
-      IOF (%): ${iofRate}%
+      IOF (%): ${iofRate}%<br>
+      ${internationalPurchase ? `ICMS: R$ ${formatBRL(icms.toFixed(2))}<br>` : ''}
+      ${internationalPurchase ? `Taxa de Importação: R$ ${formatBRL(importTax.toFixed(2))}<br>` : ''}
+      ${internationalPurchase ? `Total: R$ ${formatBRL(totalPrice)}` : ''}
     `;
   }
   return null;
@@ -100,9 +144,9 @@ function handleMouseMove(event) {
         hideTooltip();
       }
     } else {
-    hideTooltip();
-  }
-} else {
+      hideTooltip();
+    }
+  } else {
     hideTooltip();
   }
 }
@@ -137,6 +181,9 @@ if (chrome.storage && chrome.storage.onChanged) {
     if (namespace === 'sync' && 'iofRate' in changes) {
       iofRate = changes.iofRate.newValue;
     }
+    if (namespace === 'sync' && 'internationalPurchase' in changes) {
+      internationalPurchase = changes.internationalPurchase.newValue;
+    }
   });
 } else {
   console.error('chrome.storage.onChanged is not available');
@@ -144,12 +191,13 @@ if (chrome.storage && chrome.storage.onChanged) {
 
 // Fetch the initial state and conversion rates
 if (chrome.storage && chrome.storage.sync) {
-  chrome.storage.sync.get(['enabled', 'rates', 'iofRate'], (data) => {
+  chrome.storage.sync.get(['enabled', 'rates', 'iofRate', 'internationalPurchase'], (data) => {
     enabled = data.enabled || false;
     const rates = data.rates || {};
     conversionRateBRLtoUSD = rates.BRLtoUSD || 0;
     conversionRateUSDtoBRL = rates.USDtoBRL || 0;
     iofRate = data.iofRate || 0;
+    internationalPurchase = data.internationalPurchase || false;
     createTooltip();
     if (enabled) {
       attachMouseMoveListener();
