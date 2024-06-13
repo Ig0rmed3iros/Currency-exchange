@@ -2,11 +2,11 @@
 
 ## Descrição
 
-A **Currency Converter Extension** é uma ferramenta para viajantes e compradores online. Esta extensão para o Chrome facilita a conversão de preços entre USD e BRL em tempo real, aplicando automaticamente a taxa de câmbio atual,o IOF (Imposto sobre Operações Financeiras), ICMS e a nova taxa de importação, conforme a PL 914/24. Com ela, você pode visualizar os preços convertidos diretamente na página, poupando tempo e esforço ao fazer compras internacionais.
+A **Currency Converter Extension** é uma ferramenta para viajantes e compradores online. Esta extensão para o Chrome facilita a conversão de preços entre qualquer moeda e BRL em tempo real, aplicando automaticamente a taxa de câmbio atual, o IOF (Imposto sobre Operações Financeiras), ICMS e a nova taxa de importação, conforme a PL 914/24. Com ela, você pode visualizar os preços convertidos diretamente na página, poupando tempo e esforço ao fazer compras internacionais.
 
 ## Funcionalidades
 
-- **Conversão de Moeda em Tempo Real:** Converte preços de USD para BRL e de BRL para USD utilizando taxas de câmbio atualizadas.
+- **Conversão de Moeda em Tempo Real:** Converte preços de qualquer moeda para BRL e de BRL para USD utilizando taxas de câmbio atualizadas.
 - **Cálculo Automático do IOF:** Aplica a taxa de IOF configurável.
 - **Cálculo Automático do Impostos:** Aplica as taxas de ICMS e importação automaticamente, permitindo que você veja o preço real incluindo impostos.
 - **Tooltip de Preços:** Exibe um tooltip com a conversão direta, valor com IOF e a taxa de IOF aplicada ao passar o mouse sobre os preços.
